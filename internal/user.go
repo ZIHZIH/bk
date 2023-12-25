@@ -1,50 +1,48 @@
 package internal
 
 import (
-	"fmt"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"wzh/controller"
 )
 
-// UserLogin 用户登陆
-func UserLogin(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("用户登陆")
-	defer func() { _ = req.Body.Close() }()
-	// 从req中提取所需要的信息
-	err := req.ParseForm()
-	username := req.PostForm.Get("username")
-	password := req.PostForm.Get("password")
-	// 根据提供的用户名查询数据库
-	pw, err := controller.GetUser(username)
+// userRegister 用户注册
+func userRegister(c *gin.Context) {
+	temp := &controller.UserRecord{}
+	err := c.ShouldBind(temp)
 	if err != nil {
-		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte(err.Error()))
+		c.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 		return
 	}
-	// 密码是否正确
-	if pw != password {
-		res.WriteHeader(http.StatusBadRequest)
-		res.Write([]byte("密码错误"))
+
+	resp, err := controller.CreateUser(temp)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 		return
 	}
-	// 填写响应消息
-	res.Write(httpResponseSuccessMessage)
+
+	c.JSON(http.StatusOK, resp)
 }
 
-// UserRegister 用户注册
-func UserRegister(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("用户注册")
-	defer func() { _ = req.Body.Close() }()
-	req.ParseForm()
-	username := req.PostForm.Get("username")
-	password := req.PostForm.Get("password")
-	// 根据用户查询数据库，判断用户是否存在
-	_, err := controller.GetUser(username)
-	if err == nil {
-		res.Write([]byte("用户已经存在"))
+// userLogin 用户登陆
+func userLogin(c *gin.Context) {
+	phoneNumber := c.PostForm("phone_number")
+	if phoneNumber == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "电话号码为空"})
 		return
 	}
-	controller.CreateUser(username, password)
-	// 填写响应消息
-	res.Write(httpResponseSuccessMessage)
+
+	record, err := controller.GetUser(phoneNumber)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	password := c.PostForm("password")
+	if record.Password != password {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "密码不正确"})
+		return
+	}
+
+	c.JSON(http.StatusOK, record)
 }
