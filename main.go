@@ -15,4 +15,5 @@ func main() {
 	}
 
 	fmt.Println("c2test")
+	fmt.Println("c1test")
 }
