@@ -14,5 +14,5 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Println("test")
+	fmt.Println("c2test")
 }
