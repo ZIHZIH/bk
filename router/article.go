@@ -1,14 +1,15 @@
-package internal
+package router
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"wzh/controller"
+	"wzh/dal/model"
 )
 
-// articleGet 文章的获取
-func articleGet(c *gin.Context) {
+// ArticleGet 文章的获取
+func ArticleGet(c *gin.Context) {
 	articleId := c.Query("id")
 	if articleId == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "dont have parameter：id"})
@@ -21,7 +22,7 @@ func articleGet(c *gin.Context) {
 		return
 	}
 
-	result, err := controller.GetArticle(recordId)
+	result, err := controller.GetArticle(c, recordId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -30,16 +31,16 @@ func articleGet(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// articleUpdate 文章的更新
-func articleUpdate(c *gin.Context) {
-	temp := &controller.ArticleRecord{}
+// ArticleUpdate 文章的更新
+func ArticleUpdate(c *gin.Context) {
+	temp := new(model.Article)
 	err := c.ShouldBindJSON(temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := controller.UpdateArticle(temp)
+	result, err := controller.UpdateArticle(c, temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -48,8 +49,8 @@ func articleUpdate(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// articleDelete 文章的删除
-func articleDelete(c *gin.Context) {
+// ArticleDelete 文章的删除
+func ArticleDelete(c *gin.Context) {
 	articleId := c.Query("id")
 	if articleId == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "dont have parameter：id"})
@@ -62,7 +63,7 @@ func articleDelete(c *gin.Context) {
 		return
 	}
 
-	err = controller.DeleteArticle(recordId)
+	err = controller.DeleteArticle(c, recordId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -71,16 +72,16 @@ func articleDelete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "200"})
 }
 
-// articleCreat 文章的创建
-func articleCreat(c *gin.Context) {
-	temp := &controller.ArticleRecord{}
+// ArticleCreat 文章的创建
+func ArticleCreat(c *gin.Context) {
+	temp := new(model.Article)
 	err := c.ShouldBindJSON(temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := controller.CreatArticle(temp)
+	result, err := controller.CreatArticle(c, temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -89,9 +90,9 @@ func articleCreat(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// listArticle 列出所有文章
-func listArticle(c *gin.Context) {
-	resp, err := controller.ListArticle()
+// ListArticle 列出所有文章
+func ListArticle(c *gin.Context) {
+	resp, err := controller.ListArticle(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
