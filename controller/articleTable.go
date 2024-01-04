@@ -1,64 +1,50 @@
 package controller
 
 import (
-	"errors"
-	"time"
+	"context"
+	"wzh/dal/model"
+	"wzh/infra"
 )
 
-// 模拟自增id
-var articleTotal = 0
-
-// 模拟数据库存储（key：id）
-var articleMap map[int]*ArticleRecord
-
-type ArticleRecord struct {
-	Id         int       `json:"id"`
-	UserId     int       `json:"user_id"`
-	Title      string    `json:"title"`
-	Content    string    `json:"content"`
-	Label      string    `json:"label"`
-	Status     int       `json:"status"`
-	CreateTime time.Time `json:"create_time"`
-}
-
-func init() {
-	articleMap = make(map[int]*ArticleRecord)
-}
-
 // GetArticle 根据id查询文章记录
-func GetArticle(id int) (*ArticleRecord, error) {
-	if v, ok := articleMap[id]; ok {
-		return v, nil
+func GetArticle(ctx context.Context, id int) (*model.Article, error) {
+	article := new(model.Article)
+	if ret := infra.DB.First(article, id); ret.Error != nil {
+		return nil, ret.Error
 	}
-	return nil, errors.New("article is not exist")
+	return article, nil
 }
 
 // CreatArticle 创建新的文章记录
-func CreatArticle(a *ArticleRecord) (*ArticleRecord, error) {
-	articleTotal++
-	a.Id = articleTotal
-	a.CreateTime = time.Now()
-	articleMap[articleTotal] = a
-	return a, nil
+func CreatArticle(ctx context.Context, article *model.Article) (*model.Article, error) {
+	if ret := infra.DB.Create(article); ret.Error != nil {
+		return nil, ret.Error
+	}
+
+	return article, nil
 }
 
 // DeleteArticle 根据文章id对文章记录进行删除
-func DeleteArticle(id int) error {
-	delete(articleMap, id)
+func DeleteArticle(ctx context.Context, id int) error {
+	if ret := infra.DB.Delete(&model.Article{}, id); ret.Error != nil {
+		return ret.Error
+	}
 	return nil
 }
 
 // UpdateArticle 对文章进行更新
-func UpdateArticle(a *ArticleRecord) (*ArticleRecord, error) {
-	articleMap[a.Id] = a
-	return a, nil
+func UpdateArticle(ctx context.Context, article *model.Article) (*model.Article, error) {
+	if err := infra.DB.Model(article).Updates(article).Error; err != nil {
+		return nil, err
+	}
+	return article, nil
 }
 
 // ListArticle 获取所有文章列表
-func ListArticle() ([]*ArticleRecord, error) {
-	result := make([]*ArticleRecord, 0)
-	for _, v := range articleMap {
-		result = append(result, v)
+func ListArticle(ctx context.Context) ([]*model.Article, error) {
+	result := make([]*model.Article, 0)
+	if err := infra.DB.Find(&result).Error; err != nil {
+		return nil, err
 	}
 	return result, nil
 }
