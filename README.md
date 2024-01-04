@@ -1,27 +1,13 @@
 wzh 的练习博客的练习
-wzh6666
-add 121 121
-add 123 
-add 125
-add 927
-add 932
-add 1010
-add 1011
-add 1013
-add 911
-fix 925
-fix 926
-add 340
-v1.00000000000vv
-add 410
-add413
-v2.00000000000vv
-v2.1
-v3.0
-add 453
-add 503
-v5.0
-add514
-add517
-add518
-v9.0
+
+cmd 目录为一些可自动生成go代码一些工具，目前已注释后续再研究。例如gorm的gen。
+
+config目录为配置文件以及对config.yaml文件一些读取操作。
+
+dal牡蛎里面的model是对mysql每个表相对应对结构体模型，方便gorm增删改查数据库。
+
+infra目录里面主要是进行一些初始化工作，提供对数据库访问的全局句柄。
+
+router目录里面主要是一些gin框架的初始化以及一些中间件、handel的书写。
+
+test目录里面主要是提供一个main函数对部分函数功能进行一些简单对测试。
