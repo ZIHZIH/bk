@@ -192,3 +192,43 @@ func TestLikeArticle(t *testing.T) {
 		t.Errorf("Expected status code %d, but got %d", http.StatusOK, resp.Code)
 	}
 }
+
+func TestLikeGetByArticleID(t *testing.T) {
+	r := gin.Default()
+	Init(r)
+
+	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8080/getArticleLike", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	params := make(url.Values)
+	params.Add("article_id", "3")
+	req.URL.RawQuery = params.Encode()
+
+	resp := httptest.NewRecorder()
+
+	r.ServeHTTP(resp, req)
+	if resp.Code != http.StatusInternalServerError {
+		t.Errorf("Expected status code %d, but got %d", http.StatusInternalServerError, resp.Code)
+	}
+}
+
+func TestCommentGetByArticleID(t *testing.T) {
+	r := gin.Default()
+	Init(r)
+
+	req, err := http.NewRequest(http.MethodGet, "http://127.0.0.1:8080/getArticleComment", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	params := make(url.Values)
+	params.Add("article_id", "3")
+	req.URL.RawQuery = params.Encode()
+
+	resp := httptest.NewRecorder()
+
+	r.ServeHTTP(resp, req)
+	if resp.Code != http.StatusInternalServerError {
+		t.Errorf("Expected status code %d, but got %d", http.StatusInternalServerError, resp.Code)
+	}
+}

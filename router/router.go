@@ -31,5 +31,7 @@ func Init(r *gin.Engine) {
 		r.DELETE("/deleteArticle", ArticleDelete)
 		r.POST("/commentArticle", CommentArticle)
 		r.POST("/likeArticle", LikeArticle)
+		r.GET("/getArticleLike", LikeGetByArticleID)
+		r.GET("/getArticleComment", CommentGetByArticleID)
 	}
 }

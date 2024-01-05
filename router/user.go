@@ -3,8 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"wzh/controller"
-	"wzh/dal/model"
+	"wzh/dao"
+	"wzh/model"
 )
 
 // UserRegister 用户注册
@@ -24,7 +24,7 @@ func UserRegister(c *gin.Context) {
 		return
 	}
 
-	resp, err := controller.CreateUser(c, temp)
+	resp, err := dao.CreateUser(c, temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"err": err.Error()})
 		return
@@ -41,7 +41,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	record, err := controller.GetUser(c, phoneNumber)
+	record, err := dao.GetUser(c, phoneNumber)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
