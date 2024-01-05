@@ -7,5 +7,6 @@ mysql:
   timeout: 3s
   
 redis:
-  host: 127.0.0.1
-  port: 6379
+  addr: localhost:6379
+  password: qwe
+  db: 0

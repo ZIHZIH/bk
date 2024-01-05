@@ -6,6 +6,7 @@ var Config *ProjectConfig
 
 type ProjectConfig struct {
 	MysqlConfig *MysqlConfig `mapstructure:"mysql"`
+	RedisConfig *RedisConfig `mapstructure:"cache"`
 }
 
 type MysqlConfig struct {
@@ -15,6 +16,12 @@ type MysqlConfig struct {
 	Port     int    `mapstructure:"port"`
 	DbName   string `mapstructure:"db_name"`
 	Timeout  string `mapstructure:"timeout"`
+}
+
+type RedisConfig struct {
+	Addr     string `mapstructure:"addr"`
+	Password string `mapstructure:"password"`
+	DB       int    `mapstructure:"db"`
 }
 
 func readConfig() error {
@@ -40,6 +47,7 @@ func readConfig() error {
 func InitConfig() error {
 	Config = new(ProjectConfig)
 	Config.MysqlConfig = &MysqlConfig{}
+	Config.RedisConfig = &RedisConfig{}
 	err := readConfig()
 	if err != nil {
 		return err

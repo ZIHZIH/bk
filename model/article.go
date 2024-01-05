@@ -9,7 +9,7 @@ type Article struct {
 	Title    string `gorm:"column:title;type:varchar(50);comment:文章标题;NOT NULL" json:"title"`
 	Content  string `gorm:"column:content;type:varchar(1024);comment:文章内容;NOT NULL" json:"content"`
 	Label    string `gorm:"column:label;type:varchar(50);comment:文章标签" json:"label"`
-	Status   int    `gorm:"column:Status;type:tinyint(4);comment:状态;NOT NULL" json:"Status"`
+	Status   int    `gorm:"column:Status;type:tinyint(4);comment:状态;NOT NULL" json:"status"`
 	gorm.Model
 }
 
