@@ -1,23 +1,22 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"wzh/dao"
 	"wzh/infra"
+	"wzh/logger"
 	"wzh/router"
 )
 
 func main() {
+	logger.Init()
+	infra.Init()
+	dao.Init()
+
 	r := gin.Default()
 	router.Init(r)
-
-	if err := infra.Init(); err != nil {
-		fmt.Println(err)
-		return
-	}
-
 	err := r.Run()
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 }

@@ -1,9 +1,9 @@
-package controller
+package dao
 
 import (
 	"context"
-	"wzh/dal/model"
 	"wzh/infra"
+	"wzh/model"
 )
 
 // GetUser 根据phoneNumber查询密码

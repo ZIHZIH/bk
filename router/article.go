@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"wzh/controller"
-	"wzh/dal/model"
+	"wzh/dao"
+	"wzh/model"
 )
 
 // ArticleGet 文章的获取
@@ -22,7 +22,7 @@ func ArticleGet(c *gin.Context) {
 		return
 	}
 
-	result, err := controller.GetArticle(c, recordId)
+	result, err := dao.ArticleD.GetArticle(c, recordId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -40,7 +40,7 @@ func ArticleUpdate(c *gin.Context) {
 		return
 	}
 
-	result, err := controller.UpdateArticle(c, temp)
+	result, err := dao.ArticleD.UpdateArticle(c, temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -63,7 +63,7 @@ func ArticleDelete(c *gin.Context) {
 		return
 	}
 
-	err = controller.DeleteArticle(c, recordId)
+	err = dao.ArticleD.DeleteArticle(c, recordId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -81,7 +81,7 @@ func ArticleCreat(c *gin.Context) {
 		return
 	}
 
-	result, err := controller.CreatArticle(c, temp)
+	result, err := dao.ArticleD.CreatArticle(c, temp)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -92,7 +92,7 @@ func ArticleCreat(c *gin.Context) {
 
 // ListArticle 列出所有文章
 func ListArticle(c *gin.Context) {
-	resp, err := controller.ListArticle(c)
+	resp, err := dao.ArticleD.ListArticle(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
