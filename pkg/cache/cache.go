@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/redis/go-redis/v9"
 	"time"
-	"wzh/logger"
+	"wzh/infra"
 )
 
 type Cache struct {
@@ -17,7 +17,7 @@ func (cache *Cache) SetCache(ctx context.Context, id string, value interface{}, 
 	key := cache.Prefix + id
 	err := cache.RedisDb.Set(ctx, key, value, expiration).Err()
 	if err != nil {
-		logger.Logger.Println(err)
+		infra.Logger.Println(err)
 		return err
 	}
 	return nil
@@ -28,7 +28,7 @@ func (cache *Cache) GetCache(ctx context.Context, id string) (string, error) {
 	key := cache.Prefix + id
 	value, err := cache.RedisDb.Get(ctx, key).Result()
 	if err != nil && err != redis.Nil {
-		logger.Logger.Println(err)
+		infra.Logger.Println(err)
 	}
 	return value, err
 }
@@ -37,9 +37,10 @@ func (cache *Cache) GetCache(ctx context.Context, id string) (string, error) {
 func (cache *Cache) DelCache(ctx context.Context, id string) {
 	key := cache.Prefix + id
 	if err := cache.RedisDb.Del(ctx, key).Err(); err != nil {
-		logger.Logger.Println(err)
+		infra.Logger.Println(err)
 	}
 }
+
 func NewCache(prefix string, client *redis.Client) *Cache {
 	return &Cache{
 		Prefix:  prefix,
