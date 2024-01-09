@@ -10,3 +10,7 @@ redis:
   addr: localhost:6379
   password: qwe
   db: 0
+
+mongodb:
+  host: 127.0.0.1
+  port: 27017

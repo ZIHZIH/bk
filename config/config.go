@@ -5,8 +5,9 @@ import "github.com/spf13/viper"
 var Config *ProjectConfig
 
 type ProjectConfig struct {
-	MysqlConfig *MysqlConfig `mapstructure:"mysql"`
-	RedisConfig *RedisConfig `mapstructure:"cache"`
+	MysqlConfig   *MysqlConfig   `mapstructure:"mysql"`
+	RedisConfig   *RedisConfig   `mapstructure:"redis"`
+	MongodbConfig *MongodbConfig `mapstructure:"mongodb"`
 }
 
 type MysqlConfig struct {
@@ -24,13 +25,18 @@ type RedisConfig struct {
 	DB       int    `mapstructure:"db"`
 }
 
+type MongodbConfig struct {
+	Host string `mapstructure:"host"`
+	Port int    `mapstructure:"port"`
+}
+
 func readConfig() error {
 	// 设置配置文件的名字
 	viper.SetConfigName("config")
 	// 设置配置文件的类型
 	viper.SetConfigType("yaml")
 	// 添加配置文件的路径，指定 config 目录下寻找
-	viper.AddConfigPath("./config")
+	viper.AddConfigPath("../config")
 
 	err := viper.ReadInConfig()
 	if err != nil {
