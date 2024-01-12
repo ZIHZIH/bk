@@ -1,0 +1,26 @@
+app:
+  host: 127.0.0.1
+  port: 15033
+
+mysql:
+  username: root
+  password: 123456
+  host: 127.0.0.1
+  port: 3306
+  db_name: bk
+  timeout: 3s
+  
+redis:
+  addr: localhost:6379
+  password: qwe
+  db: 0
+
+mongodb:
+  host: 127.0.0.1
+  port: 27017
+
+kafka:
+  addr: 127.0.0.1:9092
+  topic: log-topic
+  group_id: 1
+
