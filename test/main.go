@@ -1,19 +1,12 @@
 package main
 
-import "fmt"
-
 func main() {
 	//infra.Init()
-	//collection := infra.Mongodb.Database("bk").Collection("article")
-	//data := model.Article{AuthorId: 332, Title: "wzhwzhwzh"}
-	//res, err := collection.InsertOne(context.Background(), data)
-	//if err != nil {
-	//	fmt.Println(err)
-	//	return
+	//consumer := kafka2.NewConsumer(infra.Logger)
+	//go consumer.Run()
+	//
+	//producer := kafka2.NewProducer()
+	//for i := 0; i < 100; i++ {
+	//	producer.Write(context.Background())
 	//}
-	//fmt.Println("res ID:", res.InsertedID)
-	m := make(map[string]string)
-	m["wzh"] = "666"
-	m["xj"] = "888"
-	fmt.Println(m)
 }
