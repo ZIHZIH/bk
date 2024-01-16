@@ -24,7 +24,8 @@ func ArticleGet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, resp.Id)
+	c.Header("Content-Type", "application/json")
+	c.String(http.StatusOK, resp.Id)
 }
 
 // ArticleUpdate 文章的更新
