@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
+	"strings"
 	"wzh/gateway/utils"
 	"wzh/pkg/pb"
 )
@@ -85,5 +86,6 @@ func ListArticle(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, resp.Articles)
+	c.Header("Content-Type", "application/json")
+	c.String(http.StatusOK, strings.Join(resp.Articles, ", "))
 }
