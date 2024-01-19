@@ -1,4 +1,4 @@
-module wzh
+module github.com/ZIHZIH/bk
 
 go 1.20
 
