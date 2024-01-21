@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option go_package = "../pb;pb";
+
+import "datatype.proto";
+
+service UserService {
+    rpc UserRegister(UserRegisterRequest) returns (UserRegisterResponse) {}
+
+    rpc GetUserByPhoneNumber(GetUserByPhoneNumberRequest) returns (GetUserByPhoneNumberResponse) {}
+
+}
+
+message UserRegisterRequest {
+    string username = 1;
+    string phone_number = 2;
+    string password = 3;
+    string avatar = 4;
+    string identity = 5;
+    string ip_position = 6;
+}
+
+message UserRegisterResponse {
+    User user = 1;
+}
+
+message GetUserByPhoneNumberRequest {
+    string phone_number = 1;
+}
+
+message GetUserByPhoneNumberResponse {
+    User user = 1;
+}

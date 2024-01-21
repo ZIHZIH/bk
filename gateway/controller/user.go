@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"bk/gateway/api/pb"
+	"bk/gateway/utils"
+	"bk/gateway/utils/auth_jwt"
 	"context"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"wzh/gateway/utils"
-	"wzh/gateway/utils/auth_jwt"
-	"wzh/pkg/pb"
 )
 
 // UserRegister 用户注册

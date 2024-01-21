@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option go_package = "../pb;pb";
+
+import "datatype.proto";
+
+service CommentService {
+
+    rpc CreateComment(CreateCommentRequest) returns (CreateCommentResponse) {}
+
+    rpc GetCommentByArticleId(GetCommentByArticleIdRequest) returns (GetCommentByArticleIdResponse) {}
+
+}
+
+
+message CreateCommentRequest {
+    int32 article_id = 1;
+    int32 commentator_id = 2;
+    string content = 3;
+}
+
+message CreateCommentResponse {
+    Comment comment = 1;
+}
+
+message GetCommentByArticleIdRequest {
+    int32 id = 1;
+}
+
+message GetCommentByArticleIdResponse {
+    repeated Comment comments = 1;
+}

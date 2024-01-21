@@ -1,8 +1,8 @@
 package utils
 
 import (
+	"bk/gateway/api/pb"
 	"google.golang.org/grpc"
-	"wzh/pkg/pb"
 )
 
 var UserServiceClient pb.UserServiceClient

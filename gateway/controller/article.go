@@ -1,13 +1,13 @@
 package controller
 
 import (
+	"bk/gateway/api/pb"
+	"bk/gateway/utils"
 	"context"
 	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
 	"strings"
-	"wzh/gateway/utils"
-	"wzh/pkg/pb"
 )
 
 // ArticleGet 文章的获取

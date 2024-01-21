@@ -1,10 +1,10 @@
 package service
 
 import (
+	"bk/article/api/pb"
+	"bk/article/internal/dao"
+	"bk/article/utils/kafka"
 	"context"
-	"wzh/article/internal/dao"
-	"wzh/article/utils/kafka"
-	"wzh/pkg/pb"
 )
 
 type ArticleService struct {

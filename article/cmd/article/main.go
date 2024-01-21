@@ -1,15 +1,15 @@
 package main
 
 import (
+	"bk/article/api/pb"
+	"bk/article/config"
+	"bk/article/infra"
+	"bk/article/internal/dao"
+	"bk/article/internal/service"
+	"bk/article/utils/kafka"
 	"google.golang.org/grpc"
 	"net"
 	"strconv"
-	"wzh/article/config"
-	"wzh/article/infra"
-	"wzh/article/internal/dao"
-	"wzh/article/internal/service"
-	"wzh/article/utils/kafka"
-	"wzh/pkg/pb"
 )
 
 func main() {

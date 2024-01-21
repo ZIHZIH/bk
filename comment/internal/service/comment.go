@@ -1,11 +1,11 @@
 package service
 
 import (
+	"bk/comment/api/pb"
+	"bk/comment/internal/dao"
+	model "bk/comment/internal/dao/models"
+	"bk/comment/internal/dto"
 	"context"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"wzh/comment/internal/dao"
-	model "wzh/comment/internal/dao/models"
-	"wzh/pkg/pb"
 )
 
 type CommentService struct {
@@ -18,14 +18,13 @@ func (c *CommentService) CreateComment(ctx context.Context, request *pb.CreateCo
 	if err != nil {
 		return nil, err
 	}
-	return &pb.CreateCommentResponse{Comment: &pb.Comment{
-		Id:            int32(comment.Id),
-		ArticleId:     int32(comment.ArticleId),
-		CommentatorId: int32(comment.CommentatorId),
-		Content:       comment.Content,
-		CreateTime:    timestamppb.New(comment.CreatedAt),
-		UpdateTime:    timestamppb.New(comment.UpdatedAt),
-	}}, nil
+
+	resp, err := dto.Comment(ctx, comment)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.CreateCommentResponse{Comment: resp}, nil
 }
 
 func (c *CommentService) GetCommentByArticleId(ctx context.Context, request *pb.GetCommentByArticleIdRequest) (*pb.GetCommentByArticleIdResponse, error) {
@@ -36,8 +35,11 @@ func (c *CommentService) GetCommentByArticleId(ctx context.Context, request *pb.
 
 	comments := make([]*pb.Comment, 0)
 	for _, comment := range records {
-		temp := &pb.Comment{Id: int32(comment.Id), ArticleId: int32(comment.ArticleId), CommentatorId: int32(comment.Id), Content: comment.Content, CreateTime: timestamppb.New(comment.CreatedAt), UpdateTime: timestamppb.New(comment.UpdatedAt)}
-		comments = append(comments, temp)
+		res, err := dto.Comment(ctx, comment)
+		if err != nil {
+			return nil, err
+		}
+		comments = append(comments, res)
 	}
 
 	return &pb.GetCommentByArticleIdResponse{Comments: comments}, nil

@@ -1,12 +1,12 @@
 package kafka
 
 import (
+	"bk/article/config"
+	"bk/article/infra"
 	"context"
 	"github.com/segmentio/kafka-go"
 	"log"
 	"time"
-	"wzh/article/config"
-	"wzh/article/infra"
 )
 
 type Consumer struct {

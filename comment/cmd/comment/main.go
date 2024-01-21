@@ -1,14 +1,14 @@
 package main
 
 import (
+	"bk/comment/api/pb"
+	"bk/comment/config"
+	"bk/comment/infra"
+	"bk/comment/internal/dao"
+	"bk/comment/internal/service"
 	"google.golang.org/grpc"
 	"net"
 	"strconv"
-	"wzh/comment/config"
-	"wzh/comment/infra"
-	"wzh/comment/internal/dao"
-	"wzh/comment/internal/service"
-	"wzh/pkg/pb"
 )
 
 func main() {

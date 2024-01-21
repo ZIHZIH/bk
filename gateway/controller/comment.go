@@ -1,12 +1,12 @@
 package controller
 
 import (
+	"bk/gateway/api/pb"
+	"bk/gateway/utils"
 	"context"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"wzh/gateway/utils"
-	"wzh/pkg/pb"
 )
 
 // CommentArticle 评论文章

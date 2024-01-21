@@ -1,11 +1,11 @@
 package service
 
 import (
+	"bk/user/api/pb"
+	"bk/user/internal/dao"
+	"bk/user/internal/dao/models"
+	"bk/user/internal/dto"
 	"context"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"wzh/pkg/pb"
-	"wzh/user/internal/dao"
-	"wzh/user/internal/dao/models"
 )
 
 type UserService struct {
@@ -26,17 +26,12 @@ func (u *UserService) UserRegister(ctx context.Context, request *pb.UserRegister
 		return nil, err
 	}
 
-	return &pb.UserRegisterResponse{User: &pb.User{
-		Id:          int32(user.Id),
-		Username:    user.Username,
-		PhoneNumber: user.PhoneNumber,
-		Password:    user.Password,
-		Avatar:      user.Avatar,
-		Identity:    user.Identity,
-		IpPosition:  user.IpPosition,
-		CreateTime:  timestamppb.New(user.CreatedAt),
-		UpdateTime:  timestamppb.New(user.UpdatedAt),
-	}}, nil
+	resp, err := dto.User(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.UserRegisterResponse{User: resp}, nil
 }
 
 func (u *UserService) GetUserByPhoneNumber(ctx context.Context, request *pb.GetUserByPhoneNumberRequest) (*pb.GetUserByPhoneNumberResponse, error) {
@@ -44,17 +39,13 @@ func (u *UserService) GetUserByPhoneNumber(ctx context.Context, request *pb.GetU
 	if err != nil {
 		return nil, err
 	}
-	return &pb.GetUserByPhoneNumberResponse{User: &pb.User{
-		Id:          int32(res.Id),
-		Username:    res.Username,
-		PhoneNumber: res.PhoneNumber,
-		Password:    res.Password,
-		Avatar:      res.Avatar,
-		Identity:    res.Identity,
-		IpPosition:  res.IpPosition,
-		CreateTime:  timestamppb.New(res.CreatedAt),
-		UpdateTime:  timestamppb.New(res.UpdatedAt),
-	}}, nil
+
+	resp, err := dto.User(ctx, res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.GetUserByPhoneNumberResponse{User: resp}, nil
 }
 
 func NewUserService(userDao *dao.UserDao) *UserService {

@@ -1,10 +1,10 @@
 package dao
 
 import (
+	"bk/comment/infra"
+	model "bk/comment/internal/dao/models"
 	"context"
 	"log"
-	"wzh/comment/infra"
-	model "wzh/comment/internal/dao/models"
 )
 
 type CommentDao struct {

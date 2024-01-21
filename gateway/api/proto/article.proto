@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option go_package = "../pb;pb";
+
+
+service ArticleService {
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse) {}
+
+  rpc DeleteArticle(DeleteArticleRequest) returns (DeleteArticleResponse) {}
+
+  rpc GetArticle(GetArticleRequest) returns (GetArticleResponse) {}
+
+  rpc UpdateArticle(UpdateArticleRequest) returns (UpdateArticleResponse) {}
+
+  rpc ListArticle(ListArticleRequest) returns (ListArticleResponse) {}
+
+}
+
+message CreateArticleRequest {
+    string article = 1;
+}
+
+message CreateArticleResponse {
+    string article = 1;
+}
+
+message DeleteArticleRequest {
+    string id = 1;
+}
+
+message DeleteArticleResponse {
+    bool deleted = 1;
+}
+
+message GetArticleRequest {
+    string id = 1;
+}
+
+message GetArticleResponse {
+    string id = 1;
+}
+
+message UpdateArticleRequest {
+    string article = 1;
+}
+
+message UpdateArticleResponse {
+    int32 count = 1;
+}
+
+message ListArticleRequest {}
+
+message ListArticleResponse {
+    repeated string articles = 1;
+}

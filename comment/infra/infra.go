@@ -1,6 +1,7 @@
 package infra
 
 import (
+	"bk/comment/config"
 	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
@@ -11,7 +12,6 @@ import (
 	"log"
 	"os"
 	"time"
-	"wzh/comment/config"
 )
 
 var MysqlDB *gorm.DB

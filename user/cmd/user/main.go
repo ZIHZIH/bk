@@ -1,14 +1,14 @@
 package main
 
 import (
+	"bk/user/api/pb"
+	"bk/user/config"
+	"bk/user/infra"
+	"bk/user/internal/dao"
+	"bk/user/internal/service"
 	"google.golang.org/grpc"
 	"net"
 	"strconv"
-	"wzh/pkg/pb"
-	"wzh/user/config"
-	"wzh/user/infra"
-	"wzh/user/internal/dao"
-	"wzh/user/internal/service"
 )
 
 func main() {

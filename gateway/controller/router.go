@@ -1,11 +1,11 @@
 package controller
 
 import (
+	"bk/gateway/utils/auth_jwt"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
-	"wzh/gateway/utils/auth_jwt"
 )
 
 func MiddleWare() gin.HandlerFunc {

@@ -1,11 +1,11 @@
 package service
 
 import (
+	"bk/like/api/pb"
+	"bk/like/internal/dao"
+	model "bk/like/internal/dao/models"
+	"bk/like/internal/dto"
 	"context"
-	"google.golang.org/protobuf/types/known/timestamppb"
-	"wzh/like/internal/dao"
-	model "wzh/like/internal/dao/models"
-	"wzh/pkg/pb"
 )
 
 type LikeService struct {
@@ -19,13 +19,12 @@ func (L *LikeService) CreateLike(ctx context.Context, req *pb.CreateLikeRequest)
 		return nil, err
 	}
 
-	return &pb.CreateLikeResponse{Like: &pb.Like{
-		Id:         int32(res.Id),
-		ArticleId:  int32(res.ArticleId),
-		LikerId:    int32(res.LikerId),
-		CreateTime: timestamppb.New(res.CreatedAt),
-		UpdateTime: timestamppb.New(res.UpdatedAt),
-	}}, nil
+	likeDto, err := dto.Like(ctx, res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.CreateLikeResponse{Like: likeDto}, nil
 }
 
 func (L *LikeService) GetLikeByArticleId(ctx context.Context, req *pb.GetLikeByArticleIdRequest) (*pb.GetLikeByArticleIdResponse, error) {
@@ -36,12 +35,9 @@ func (L *LikeService) GetLikeByArticleId(ctx context.Context, req *pb.GetLikeByA
 
 	likes := make([]*pb.Like, 0)
 	for _, record := range res {
-		like := &pb.Like{
-			Id:         int32(record.Id),
-			ArticleId:  int32(record.ArticleId),
-			LikerId:    int32(record.LikerId),
-			CreateTime: timestamppb.New(record.CreatedAt),
-			UpdateTime: timestamppb.New(record.UpdatedAt),
+		like, err := dto.Like(ctx, record)
+		if err != nil {
+			return nil, err
 		}
 		likes = append(likes, like)
 	}

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = "../pb;pb";
+
+import "google/protobuf/timestamp.proto";
+
+
+message Comment {
+  int32 id = 1;
+  int32 article_id = 2;
+  int32 commentator_id = 3;
+  string content = 4;
+
+  // 创建时间
+  google.protobuf.Timestamp create_time = 5;
+  // 更新时间
+  google.protobuf.Timestamp update_time = 6;
+}
+
+message User {
+  int32 id = 1;
+  string username = 2;
+  string phone_number = 3;
+  string password = 4;
+  string avatar = 5;
+  string identity = 6;
+  string ip_position = 7;
+  // 创建时间
+  google.protobuf.Timestamp create_time = 8;
+  // 更新时间
+  google.protobuf.Timestamp update_time = 9;
+}
+
+message Like {
+  int32 id = 1;
+  int32 article_id = 2;
+  int32 liker_id = 3;
+
+  // 创建时间
+  google.protobuf.Timestamp create_time = 4;
+  // 更新时间
+  google.protobuf.Timestamp update_time = 5;
+}

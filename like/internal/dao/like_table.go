@@ -1,10 +1,10 @@
 package dao
 
 import (
+	"bk/like/infra"
+	model "bk/like/internal/dao/models"
 	"context"
 	"log"
-	"wzh/like/infra"
-	model "wzh/like/internal/dao/models"
 )
 
 type LikeDao struct {

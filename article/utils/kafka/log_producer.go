@@ -1,10 +1,10 @@
 package kafka
 
 import (
+	"bk/article/config"
 	"context"
 	"fmt"
 	"github.com/segmentio/kafka-go"
-	"wzh/article/config"
 )
 
 type Producer struct {

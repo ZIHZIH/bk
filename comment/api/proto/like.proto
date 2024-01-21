@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "../pb;pb";
+
+import "datatype.proto";
+
+service LikeService {
+
+  rpc CreateLike(CreateLikeRequest) returns (CreateLikeResponse) {}
+
+  rpc GetLikeByArticleId(GetLikeByArticleIdRequest) returns (GetLikeByArticleIdResponse) {}
+
+}
+
+
+
+message CreateLikeRequest {
+    int32 article_id = 1;
+    int32 liker_id = 2;
+}
+
+message CreateLikeResponse {
+    Like like = 1;
+}
+
+message GetLikeByArticleIdRequest {
+    int32 id = 1;
+}
+
+message GetLikeByArticleIdResponse {
+    repeated Like likes = 1;
+}

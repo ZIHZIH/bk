@@ -1,11 +1,11 @@
 package main
 
 import (
+	"bk/gateway/config"
+	"bk/gateway/controller"
+	"bk/gateway/utils"
 	"github.com/gin-gonic/gin"
 	"strconv"
-	"wzh/gateway/config"
-	"wzh/gateway/controller"
-	"wzh/gateway/utils"
 )
 
 func main() {
