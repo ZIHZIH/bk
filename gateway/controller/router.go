@@ -21,7 +21,7 @@ func Init(r *gin.Engine) {
 	r.Use(MiddleWare())
 	{
 		r.GET("/", func(c *gin.Context) {
-			//c.String(http.StatusOK, "wzh's web")
+			c.String(http.StatusOK, "wzh's web")
 		})
 		r.POST("/user/login", UserLogin)
 		r.POST("/user/register", UserRegister)
